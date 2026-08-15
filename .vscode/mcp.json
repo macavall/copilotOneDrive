@@ -1,0 +1,23 @@
+{
+  "servers": {
+    "shared-folder-agent": {
+      "type": "stdio",
+      "command": "dotnet",
+      "args": [
+        "C:\\Users\\macavall\\copilotproj\\src\\Agent.McpServer\\bin\\Debug\\net10.0\\Agent.McpServer.dll"
+      ],
+      "env": {
+        "COPILOTBUS_ROOT": "C:\\Users\\macavall\\OneDrive - Microsoft\\CopilotBus"
+      }
+    },
+    // HTTP transport. Over a code tunnel from a phone, Copilot's MCP client runs
+    // on the tunnel HOST PC (not the phone), so this loopback URL works as-is once
+    // the "Run MCP Server (HTTP)" task is started - no port forwarding or
+    // devtunnels URL needed. Only swap this for a forwarded https URL if a client
+    // running directly ON the phone (outside the vscode.dev tunnel) must connect.
+    "shared-folder-agent-http": {
+      "type": "http",
+      "url": "http://127.0.0.1:5250/"
+    }
+  }
+}

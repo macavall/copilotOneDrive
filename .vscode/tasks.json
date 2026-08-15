@@ -1,0 +1,56 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run MCP Server (HTTP)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "${workspaceFolder}/src/Agent.McpServer/bin/Debug/net10.0/Agent.McpServer.dll"
+      ],
+      "options": {
+        "env": {
+          "MCP_TRANSPORT": "http",
+          "MCP_HTTP_URLS": "http://127.0.0.1:5250",
+          "COPILOTBUS_ROOT": "C:\\Users\\macavall\\OneDrive\\CopilotBus"
+        }
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Run Worker",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "${workspaceFolder}/src/Agent.Worker/Agent.Worker.csproj"
+      ],
+      "options": {
+        "env": {
+          "FileBus__RootDirectory": "C:\\Users\\macavall\\OneDrive\\CopilotBus"
+        }
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Start Agent (HTTP + Worker)",
+      "dependsOn": [
+        "Run MCP Server (HTTP)",
+        "Run Worker"
+      ],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    }
+  ]
+}

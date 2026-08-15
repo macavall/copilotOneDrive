@@ -1,0 +1,12 @@
+{
+  // Auto-forward the MCP HTTP port so Copilot on a phone can reach it over the tunnel.
+  "remote.portsAttributes": {
+    "5250": {
+      "label": "MCP Server (HTTP)",
+      "protocol": "http",
+      "onAutoForward": "notify"
+    }
+  },
+  "remote.autoForwardPorts": true,
+  "remote.autoForwardPortsSource": "hybrid"
+}
