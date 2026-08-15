@@ -7,6 +7,9 @@ public sealed class WorkerOptions
 {
     /// <summary>Fallback sweep interval; catches files whose FS/OneDrive events were missed.</summary>
     public TimeSpan PollInterval { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>Types handled by another consumer (the VS Code extension); the worker leaves them alone.</summary>
+    public string[] ExternalTypes { get; set; } = new[] { "llm", "chat", "ask" };
 }
 
 /// <summary>
@@ -88,6 +91,14 @@ public sealed class WatcherWorker : BackgroundService
                 if (message is null)
                 {
                     _bus.ReleaseClaim(file);
+                    continue;
+                }
+
+                var hasHandler = _handlers.Any(h => h.CanHandle(message.Type));
+                if (!hasHandler && _options.ExternalTypes.Any(t =>
+                        string.Equals(t, message.Type, StringComparison.OrdinalIgnoreCase)))
+                {
+                    _bus.ReleaseClaim(file); // handled by the VS Code extension
                     continue;
                 }
 

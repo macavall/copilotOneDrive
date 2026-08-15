@@ -16,7 +16,6 @@ builder.Services.AddSingleton(sp =>
 builder.Services.AddSingleton<ITaskHandler, EchoTaskHandler>();
 builder.Services.AddSingleton<ITaskHandler, KustoTaskHandler>();
 builder.Services.AddSingleton<ITaskHandler, ShellTaskHandler>();
-builder.Services.AddSingleton<ITaskHandler, LlmTaskHandler>();
 builder.Services.AddHostedService<WatcherWorker>();
 
 var host = builder.Build();
