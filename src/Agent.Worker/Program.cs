@@ -8,6 +8,7 @@ builder.Services.Configure<FileBusOptions>(builder.Configuration.GetSection("Fil
 builder.Services.Configure<WorkerOptions>(builder.Configuration.GetSection("Worker"));
 builder.Services.Configure<KustoOptions>(builder.Configuration.GetSection("Kusto"));
 builder.Services.Configure<ShellOptions>(builder.Configuration.GetSection("Shell"));
+builder.Services.Configure<LlmOptions>(builder.Configuration.GetSection("Llm"));
 
 builder.Services.AddSingleton(sp =>
     new FileBus(sp.GetRequiredService<IOptions<FileBusOptions>>().Value));
@@ -15,6 +16,7 @@ builder.Services.AddSingleton(sp =>
 builder.Services.AddSingleton<ITaskHandler, EchoTaskHandler>();
 builder.Services.AddSingleton<ITaskHandler, KustoTaskHandler>();
 builder.Services.AddSingleton<ITaskHandler, ShellTaskHandler>();
+builder.Services.AddSingleton<ITaskHandler, LlmTaskHandler>();
 builder.Services.AddHostedService<WatcherWorker>();
 
 var host = builder.Build();
